@@ -1,6 +1,6 @@
 import { BookReview } from "./interfaces";
 
-export const reviews: BookReview[] = [
+const _reviews: BookReview[] = [
   {
     id: 1,
     title: "たのしいRuby 第6版",
@@ -30,3 +30,39 @@ export const reviews: BookReview[] = [
     reviewer: "mmyoji",
   },
 ];
+
+export const ReviewStore = {
+  get(id?: number) {
+    if (id) {
+      return _reviews.find((r) => r.id === id);
+    }
+
+    return _reviews;
+  },
+
+  add(item: BookReview) {
+    _reviews.push(item);
+  },
+
+  update(
+    id: number,
+    item: Pick<BookReview, "title" | "body" | "score" | "reviewer">
+  ) {
+    const index = _reviews.findIndex((r) => r.id === id);
+    if (!index) {
+      return;
+    }
+
+    _reviews[index] = {
+      id,
+      ...item,
+    };
+  },
+
+  delete(id: number) {
+    const index = _reviews.findIndex((r) => r.id === id);
+    if (!index) return;
+
+    _reviews.splice(index, 1);
+  },
+};

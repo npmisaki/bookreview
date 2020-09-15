@@ -1,7 +1,7 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 
 import { BookReview } from "../../interfaces";
-import { reviews } from "../../data";
+import { ReviewStore } from "../../data";
 
 type QueryParams = { id: string };
 type UpdateParams = Pick<BookReview, "title" | "body" | "score" | "reviewer">;
@@ -15,7 +15,7 @@ function getId(req: NowRequest): number {
 function getReview(req: NowRequest, res: NowResponse) {
   const id = getId(req);
 
-  const review = reviews.find((r) => r.id === id);
+  const review = ReviewStore.get(id);
   if (review) {
     res.status(200).send(review);
     return;
@@ -30,20 +30,17 @@ function updateReview(req: NowRequest, res: NowResponse) {
 
   const { title, body, score, reviewer } = req.body as UpdateParams;
 
-  const index = reviews.findIndex((r) => r.id === id);
-
   // TODO: validations
   // タイトル: 必須 / 255文字以内
   // 評価: 必須 / 1~5以内
   // レビュー内容: 自由
   // 書いた人: 必須 / 255文字以内
-  reviews[index] = {
-    id,
+  ReviewStore.update(id, {
     title,
     body,
     score,
     reviewer,
-  };
+  });
 
   res.status(204).end();
 }
@@ -51,8 +48,7 @@ function updateReview(req: NowRequest, res: NowResponse) {
 // DELETE /api/reviews/:id
 function deleteReview(req: NowRequest, res: NowResponse) {
   const id = getId(req);
-  const index = reviews.findIndex((r) => r.id === id);
-  reviews.splice(index, 1);
+  ReviewStore.delete(id);
   res.status(200).end();
 }
 
