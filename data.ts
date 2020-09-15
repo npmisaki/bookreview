@@ -61,7 +61,7 @@ export const ReviewStore = {
 
   delete(id: number) {
     const index = _reviews.findIndex((r) => r.id === id);
-    if (!index) return;
+    if (index === -1) return;
 
     _reviews.splice(index, 1);
   },
