@@ -16,13 +16,14 @@ async function getReviews(_req: NowRequest, res: NowResponse) {
 async function createReview(req: NowRequest, res: NowResponse) {
   const { title, body, score, reviewer } = req.body as CreateParams;
 
-  const result = validator.validate({ title, body, score, reviewer });
+  const result = validator.validate(
+    { title, body, score, reviewer },
+    { abortEarly: false, allowUnknown: true, stripUnknown: true }
+  );
   if (result.error) {
-    res
-      .status(422)
-      .send({
-        errors: result.error.details.map(({ message }) => message).join(","),
-      });
+    res.status(422).send({
+      errors: result.error.details.map(({ message }) => message).join(","),
+    });
     return;
   }
 

@@ -31,7 +31,10 @@ async function updateReview(req: NowRequest, res: NowResponse) {
 
   const { title, body, score, reviewer } = req.body as UpdateParams;
 
-  const result = validator.validate({ title, body, score, reviewer });
+  const result = validator.validate(
+    { title, body, score, reviewer },
+    { abortEarly: false, allowUnknown: true, stripUnknown: true }
+  );
   if (result.error) {
     res.status(422).send({
       errors: result.error.details.map(({ message }) => message).join(","),
