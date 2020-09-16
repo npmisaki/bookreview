@@ -1,0 +1,4 @@
+export PROJECT_ID=""
+export CLIENT_EMAIL=""
+export PRIVATE_KEY=""
+export DATABASE_URL=""

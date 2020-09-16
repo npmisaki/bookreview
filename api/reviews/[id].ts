@@ -1,21 +1,21 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 
 import { BookReview } from "../../interfaces";
-import { ReviewStore } from "../../data";
+import { ReviewStore } from "../../firestore";
 
 type QueryParams = { id: string };
 type UpdateParams = Pick<BookReview, "title" | "body" | "score" | "reviewer">;
 
-function getId(req: NowRequest): number {
+function getId(req: NowRequest): string {
   const { id } = req.query as QueryParams;
-  return Number(id);
+  return id;
 }
 
 // GET /api/reviews/:id
-function getReview(req: NowRequest, res: NowResponse) {
+async function getReview(req: NowRequest, res: NowResponse) {
   const id = getId(req);
 
-  const review = ReviewStore.get(id);
+  const review = await ReviewStore.get(id);
   if (review) {
     res.status(200).send(review);
     return;
@@ -25,7 +25,7 @@ function getReview(req: NowRequest, res: NowResponse) {
 }
 
 // PATCH (PUT) /api/reviews/:id
-function updateReview(req: NowRequest, res: NowResponse) {
+async function updateReview(req: NowRequest, res: NowResponse) {
   const id = getId(req);
 
   const { title, body, score, reviewer } = req.body as UpdateParams;
@@ -35,7 +35,7 @@ function updateReview(req: NowRequest, res: NowResponse) {
   // 評価: 必須 / 1~5以内
   // レビュー内容: 自由
   // 書いた人: 必須 / 255文字以内
-  ReviewStore.update(id, {
+  await ReviewStore.update(id, {
     title,
     body,
     score,
@@ -46,22 +46,22 @@ function updateReview(req: NowRequest, res: NowResponse) {
 }
 
 // DELETE /api/reviews/:id
-function deleteReview(req: NowRequest, res: NowResponse) {
+async function deleteReview(req: NowRequest, res: NowResponse) {
   const id = getId(req);
-  ReviewStore.delete(id);
+  await ReviewStore.delete(id);
   res.status(200).end();
 }
 
-export default (req: NowRequest, res: NowResponse) => {
+export default async (req: NowRequest, res: NowResponse) => {
   if ((req.method && req.method === "PATCH") || req.method === "PUT") {
-    updateReview(req, res);
+    await updateReview(req, res);
     return;
   }
 
   if (req.method && req.method === "DELETE") {
-    deleteReview(req, res);
+    await deleteReview(req, res);
     return;
   }
 
-  getReview(req, res);
+  await getReview(req, res);
 };
