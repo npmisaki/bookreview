@@ -1,3 +1,4 @@
 .envrc
+.vercel
 node_modules
 serviceaccountkey.json
