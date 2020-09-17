@@ -39,7 +39,6 @@ export const ReviewStore = {
   },
 
   async add(item: BookReview) {
-    // TODO: validation
     await db.collection(REVIEWS).add(item);
   },
 
