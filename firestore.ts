@@ -43,10 +43,7 @@ export const ReviewStore = {
     await db.collection(REVIEWS).add(item);
   },
 
-  async update(
-    id: string,
-    item: Pick<BookReview, "title" | "body" | "score" | "reviewer">
-  ) {
+  async update(id: string, item: Omit<BookReview, "id">) {
     const snapshot = await db.collection(REVIEWS).where("id", "==", id).get();
     let review: BookReview | null = null;
     snapshot.forEach((doc) => {

@@ -4,7 +4,7 @@ import { BookReview } from "../interfaces";
 import { ReviewStore } from "../firestore";
 import { validator } from "../validator";
 
-type CreateParams = Pick<BookReview, "title" | "body" | "score" | "reviewer">;
+type CreateParams = Omit<BookReview, "id">;
 
 // GET /api/reviews
 async function getReviews(_req: NowRequest, res: NowResponse) {

@@ -5,7 +5,7 @@ import { ReviewStore } from "../../firestore";
 import { validator } from "../../validator";
 
 type QueryParams = { id: string };
-type UpdateParams = Pick<BookReview, "title" | "body" | "score" | "reviewer">;
+type UpdateParams = Omit<BookReview, "id">;
 
 function getId(req: NowRequest): string {
   const { id } = req.query as QueryParams;
