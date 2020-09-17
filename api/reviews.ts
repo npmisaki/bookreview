@@ -2,7 +2,7 @@ import { NowRequest, NowResponse } from "@vercel/node";
 
 import { BookReviewParams } from "../interfaces";
 import { ReviewStore } from "../firestore";
-import { validator } from "../validator";
+import { validate } from "../validator";
 
 // GET /api/reviews
 async function getReviews(_req: NowRequest, res: NowResponse) {
@@ -14,14 +14,9 @@ async function getReviews(_req: NowRequest, res: NowResponse) {
 async function createReview(req: NowRequest, res: NowResponse) {
   const { title, body, score, reviewer } = req.body as BookReviewParams;
 
-  const result = validator.validate(
-    { title, body, score, reviewer },
-    { abortEarly: false, allowUnknown: true, stripUnknown: true }
-  );
-  if (result.error) {
-    res.status(422).send({
-      errors: result.error.details.map(({ message }) => message).join(","),
-    });
+  const errors = validate({ title, body, score, reviewer });
+  if (errors) {
+    res.status(422).send({ errors });
     return;
   }
 
