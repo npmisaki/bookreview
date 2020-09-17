@@ -5,3 +5,5 @@ export interface BookReview {
   score: number;
   reviewer: string;
 }
+
+export type BookReviewParams = Omit<BookReview, "id">;

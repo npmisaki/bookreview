@@ -1,11 +1,10 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 
-import { BookReview } from "../../interfaces";
+import { BookReviewParams } from "../../interfaces";
 import { ReviewStore } from "../../firestore";
 import { validator } from "../../validator";
 
 type QueryParams = { id: string };
-type UpdateParams = Omit<BookReview, "id">;
 
 function getId(req: NowRequest): string {
   const { id } = req.query as QueryParams;
@@ -29,7 +28,7 @@ async function getReview(req: NowRequest, res: NowResponse) {
 async function updateReview(req: NowRequest, res: NowResponse) {
   const id = getId(req);
 
-  const { title, body, score, reviewer } = req.body as UpdateParams;
+  const { title, body, score, reviewer } = req.body as BookReviewParams;
 
   const result = validator.validate(
     { title, body, score, reviewer },

@@ -1,10 +1,8 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 
-import { BookReview } from "../interfaces";
+import { BookReviewParams } from "../interfaces";
 import { ReviewStore } from "../firestore";
 import { validator } from "../validator";
-
-type CreateParams = Omit<BookReview, "id">;
 
 // GET /api/reviews
 async function getReviews(_req: NowRequest, res: NowResponse) {
@@ -14,7 +12,7 @@ async function getReviews(_req: NowRequest, res: NowResponse) {
 
 // POST /api/reviews
 async function createReview(req: NowRequest, res: NowResponse) {
-  const { title, body, score, reviewer } = req.body as CreateParams;
+  const { title, body, score, reviewer } = req.body as BookReviewParams;
 
   const result = validator.validate(
     { title, body, score, reviewer },
