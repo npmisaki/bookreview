@@ -30,10 +30,11 @@ async function createReview(req: NowRequest, res: NowResponse) {
 }
 
 export default async (req: NowRequest, res: NowResponse) => {
-  if (req.method && req.method === "POST") {
-    await createReview(req, res);
-    return;
+  switch (req.method) {
+    case "POST":
+      await createReview(req, res);
+      return;
+    default:
+      await getReviews(req, res);
   }
-
-  await getReviews(req, res);
 };

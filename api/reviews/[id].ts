@@ -54,15 +54,15 @@ async function deleteReview(req: NowRequest, res: NowResponse) {
 }
 
 export default async (req: NowRequest, res: NowResponse) => {
-  if ((req.method && req.method === "PATCH") || req.method === "PUT") {
-    await updateReview(req, res);
-    return;
+  switch (req.method) {
+    case "PATCH":
+    case "PUT":
+      await updateReview(req, res);
+      return;
+    case "DELETE":
+      await deleteReview(req, res);
+      return;
+    default:
+      await getReview(req, res);
   }
-
-  if (req.method && req.method === "DELETE") {
-    await deleteReview(req, res);
-    return;
-  }
-
-  await getReview(req, res);
 };
