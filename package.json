@@ -2,9 +2,7 @@
   "name": "bookreview",
   "private": true,
   "main": "api/reviews.ts",
-  "scripts": {
-    "dev": "vercel dev"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "mmyoji",
   "license": "ISC",

@@ -19,7 +19,7 @@ $ npm i
 $ npx vercel login
 
 # Start dev server
-$ npx run dev
+$ npx vercel dev
 ```
 
 
