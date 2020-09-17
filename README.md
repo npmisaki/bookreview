@@ -38,7 +38,7 @@ $ npx run dev
     * `score`: (number) Review score
     * `reviewer`: (string) Reviewer name
 
-### `PATCH|PUT /api/reviews/:id`
+### `PUT /api/reviews/:id`
 
 * Update a review
 * Required parameters: Same with the `Create` ones

@@ -24,7 +24,7 @@ async function getReview(req: NowRequest, res: NowResponse) {
   res.status(404).send({ errors: ["review is not found"] });
 }
 
-// PATCH (PUT) /api/reviews/:id
+// PUT /api/reviews/:id
 async function updateReview(req: NowRequest, res: NowResponse) {
   const id = getId(req);
 
@@ -55,7 +55,6 @@ async function deleteReview(req: NowRequest, res: NowResponse) {
 
 export default async (req: NowRequest, res: NowResponse) => {
   switch (req.method) {
-    case "PATCH":
     case "PUT":
       await updateReview(req, res);
       return;
