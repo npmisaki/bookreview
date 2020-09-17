@@ -1,10 +1,8 @@
 {
   "name": "bookreview",
   "private": true,
-  "main": "api/hello.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "api/reviews.ts",
+  "scripts": {},
   "keywords": [],
   "author": "mmyoji",
   "license": "ISC",
