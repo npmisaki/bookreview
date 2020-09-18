@@ -38,7 +38,7 @@ export const ReviewStore = {
     return reviews;
   },
 
-  async add(item: BookReview) {
+  async add(item: Omit<BookReview, "id">) {
     await db.collection(REVIEWS).add(item);
   },
 

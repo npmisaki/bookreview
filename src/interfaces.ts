@@ -1,5 +1,5 @@
 export interface BookReview {
-  id?: string;
+  id: string;
   title: string;
   body: string;
   score: number;
