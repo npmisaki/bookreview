@@ -9,7 +9,7 @@ const validator = Joi.object({
   reviewer: Joi.string().max(255).required(),
 });
 
-export function validate(params: BookReviewParams): string | undefined {
+export function validate(params: BookReviewParams): string[] | undefined {
   const { error } = validator.validate(params, {
     abortEarly: false,
     allowUnknown: true,
@@ -20,5 +20,5 @@ export function validate(params: BookReviewParams): string | undefined {
     return;
   }
 
-  return error.details.map(({ message }) => message).join(", ");
+  return error.details.map(({ message }) => message);
 }
