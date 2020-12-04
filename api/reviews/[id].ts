@@ -1,12 +1,7 @@
 import { NowRequest, NowResponse } from "@vercel/node";
 
 import { getReview, updateReview, deleteReview } from "../../src/api/reviews";
-
-function setCORSHeaders(res: NowResponse) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-}
+import { setCORSHeaders, setCacheHeaders } from "../../src/http_headers";
 
 export default async (req: NowRequest, res: NowResponse) => {
   switch (req.method) {
@@ -16,6 +11,7 @@ export default async (req: NowRequest, res: NowResponse) => {
       return;
     case "GET":
       setCORSHeaders(res);
+      setCacheHeaders(res);
       await getReview(req, res);
       return;
     case "PUT":
