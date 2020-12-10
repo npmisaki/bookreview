@@ -34,7 +34,7 @@ $ npx vercel dev
 * Create a new review
 * Required parameters:
     * `title`: (string) Book title
-    * `body`: (string) Review message
+    * `body`: (string) Review comment
     * `score`: (number) Review score
     * `reviewer`: (string) Reviewer name
 
