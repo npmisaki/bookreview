@@ -6,6 +6,9 @@
   "keywords": [],
   "author": "mmyoji",
   "license": "ISC",
+  "engines": {
+    "node": "12.x"
+  },
   "devDependencies": {
     "@types/joi": "^14.3.4",
     "@vercel/node": "^1.8.2",
