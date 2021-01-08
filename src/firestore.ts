@@ -43,7 +43,10 @@ export const ReviewStore = {
   },
 
   async update(id: string, item: Omit<BookReview, "id">) {
-    const snapshot = await db.collection(REVIEWS).where("id", "==", id).get();
+    const ref = db.collection(REVIEWS);
+    ref.where("id", "==", id);
+    const snapshot = await ref.get();
+
     let review: BookReview | null = null;
     snapshot.forEach((doc) => {
       if (!doc.exists) return;
@@ -53,7 +56,7 @@ export const ReviewStore = {
 
     if (!review) return;
 
-    await db.collection(REVIEWS).doc(id).set(item, { merge: true });
+    await db.collection(REVIEWS).doc(id).update(item);
   },
 
   async delete(id: string) {
